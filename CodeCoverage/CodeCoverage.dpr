@@ -6,6 +6,7 @@ program CodeCoverage;
 uses
   FastMM4,
   SysUtils,
+  ActiveX,
   BreakPoint in 'BreakPoint.pas',
   BreakpointList in 'BreakpointList.pas',
   CommandLineProvider in 'CommandLineProvider.pas',
@@ -42,21 +43,23 @@ uses
   I_DebugModule in 'I_DebugModule.pas',
   ModuleNameSpaceUnit in 'ModuleNameSpaceUnit.pas',
   uConsoleOutput in 'uConsoleOutput.pas',
-  HtmlHelper in 'HtmlHelper.pas';
+  HtmlHelper in 'HtmlHelper.pas',
+  SonarCoverageReport in 'SonarCoverageReport.pas';
 
-{$Include FastMM4Options.inc}
 var
   // Delphi 7 leaks interfaces from here :-(
   ADebugger: TDebugger;
   {$define FullDebugMode}
 begin
   try
+    CoInitialize(nil);
     ADebugger := TDebugger.Create;
     try
       ADebugger.Start();
     finally
       ADebugger.Free;
     end;
+    CoUninitialize;
   except
     on E: Exception do
       WriteLn(E.ClassName, ': ', E.message);

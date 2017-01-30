@@ -42,6 +42,7 @@ type
     FSeparateMeta: Boolean;
     FXmlOutput: Boolean;
     FHtmlOutput: Boolean;
+    FSonarOutput: Boolean;
     FExcludeSourceMaskLst: TStrings;
     FLoadingFromDProj: Boolean;
     FModuleNameSpaces: TModuleNameSpaceList;
@@ -102,6 +103,7 @@ type
     function SeparateMeta: Boolean;
     function XmlOutput: Boolean;
     function HtmlOutput: Boolean;
+    function SonarOutput: Boolean;
 
     function ModuleNameSpace(const AModuleName: string): TModuleNameSpace;
     function UnitNameSpace(const AModuleName: string): TUnitNameSpace;
@@ -170,6 +172,7 @@ begin
   FEmmaOutput := False;
   FSeparateMeta := False;
   FHtmlOutput := False;
+  FSonarOutput := False;
   FXmlOutput := False;
   FExcludeSourceMaskLst := TStringList.Create;
   FModuleNameSpaces := TModuleNameSpaceList.Create;
@@ -322,6 +325,11 @@ begin
   Result := FHtmlOutput;
 end;
 
+function TCoverageConfiguration.SonarOutput: Boolean;
+begin
+  Result := FSonarOutput;
+end;
+
 function TCoverageConfiguration.IsPathInExclusionList(const APath: TFileName): Boolean;
 var
   Mask: string;
@@ -351,6 +359,7 @@ begin
   FSeparateMeta := IsSet(I_CoverageConfiguration.cPARAMETER_EMMA_SEPARATE_META);
   FXmlOutput := IsSet(I_CoverageConfiguration.cPARAMETER_XML_OUTPUT);
   FHtmlOutput := IsSet(I_CoverageConfiguration.cPARAMETER_HTML_OUTPUT);
+  FSonarOutput := IsSet(I_CoverageConfiguration.cPARAMETER_SONAR_OUTPUT);
   uConsoleOutput.G_Verbose_Output := IsSet(I_CoverageConfiguration.cPARAMETER_VERBOSE);
 end;
 
@@ -510,6 +519,7 @@ begin
   else if (SwitchItem = I_CoverageConfiguration.cPARAMETER_EMMA_OUTPUT)
   or (SwitchItem = I_CoverageConfiguration.cPARAMETER_XML_OUTPUT)
   or (SwitchItem = I_CoverageConfiguration.cPARAMETER_HTML_OUTPUT)
+  or (SwitchItem = I_CoverageConfiguration.cPARAMETER_SONAR_OUTPUT)
   or (SwitchItem = I_CoverageConfiguration.cPARAMETER_VERBOSE) then
   begin
     // do nothing, because its already parsed

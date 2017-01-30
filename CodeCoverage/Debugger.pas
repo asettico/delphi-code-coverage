@@ -110,6 +110,7 @@ uses
   CommandLineProvider,
   CoverageConfiguration,
   HTMLCoverageReport,
+  SonarCoverageReport,
   CoverageStats,
   DebugProcess,
   DebugThread,
@@ -237,6 +238,8 @@ begin
       '                -- Output xml report as CodeCoverage_Summary.xml in the output directory');
   ConsoleOutput(I_CoverageConfiguration.cPARAMETER_HTML_OUTPUT +
       '               -- Output html report as CodeCoverage_Summary.html in the output directory');
+  ConsoleOutput(I_CoverageConfiguration.cPARAMETER_SONAR_OUTPUT +
+      '               -- Output xml report for Sonar Generic Test Coverage in the output directory');
   ConsoleOutput(I_CoverageConfiguration.cPARAMETER_MODULE_NAMESPACE +
       ' name dll [dll2]   -- Create a separate namespace with the given name for the listed dll:s.');
   ConsoleOutput(I_CoverageConfiguration.cPARAMETER_UNIT_NAMESPACE +
@@ -347,6 +350,13 @@ begin
     CoverageReport := TEmmaCoverageFile.Create(FCoverageConfiguration);
     CoverageReport.Generate(FCoverageStats, FModuleList,FLogManager);
   end;
+
+  if (FCoverageConfiguration.SonarOutput) then
+  begin
+    CoverageReport := TSonarCoverageReport.Create(FCoverageConfiguration);
+    CoverageReport.Generate(FCoverageStats, FModuleList, FLogManager);
+  end;
+
 end;
 
 function TDebugger.StartProcessToDebug: Boolean;

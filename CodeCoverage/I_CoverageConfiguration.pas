@@ -37,6 +37,7 @@ type
     function SeparateMeta: Boolean;
     function XmlOutput: Boolean;
     function HtmlOutput: Boolean;
+    function SonarOutput: Boolean;
     function ModuleNameSpace(const AModuleName: string): TModuleNameSpace;
     function UnitNameSpace(const AModuleName: string): TUnitNameSpace;
   end;
@@ -60,6 +61,7 @@ const
   cPARAMETER_SOURCE_PATHS_FILE = '-spf';
   cPARAMETER_EMMA_OUTPUT = '-emma';
   cPARAMETER_XML_OUTPUT = '-xml';
+  cPARAMETER_SONAR_OUTPUT = '-sonar';
   cPARAMETER_HTML_OUTPUT = '-html';
   cPARAMETER_DPROJ = '-dproj';
   cPARAMETER_EXCLUDE_SOURCE_MASK = '-esm';
